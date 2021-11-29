@@ -43,4 +43,23 @@ server.get("/api/users", async (req, res) => {
         })
     }
 })
+
+// [Get] /api/users/:id (R of CRUD, Fetch user by :id)
+server.get("/api/users/:id", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+        if(!user) {
+            res.status(404).json({
+                message: `User by id ${req.params.id} does not exist`
+            })
+        } else {
+            res.json(user)
+        }
+    }catch (err) {
+        res.status(500).json({
+            message: 'error getting all users',
+            error: err.message
+        })
+    }
+})
 module.exports = server; 
