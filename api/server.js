@@ -31,4 +31,16 @@ server.post('/api/users', async (req, res) => {
     }
 })
 
+// [Get] /api/users (R of CRUD, Fetch all )
+server.get("/api/users", async (req, res) => {
+    try {
+        const users = await User.find()
+        res.json(users)
+    }catch (err) {
+        res.status(500).json({
+            message: 'error getting all users',
+            error: err.message
+        })
+    }
+})
 module.exports = server; 
